@@ -1,17 +1,22 @@
 class window.Game extends Backbone.Model
 
   initialize: ->
-    @set 'turn', 0
+    @set('gameRunning', true)
+    @get('AppModel').get('playerHand').on('hitter', @bustChecker, @)
+    @get('AppModel').get('dealerHand').on('hitter', @bustChecker, @)
+
+    #@set 'turn', 0
 
   determineWinner: ->
+    #invoke gameOver()
     if @get('AppModel').get('playerHand').scores()[0] > @get('AppModel').get('dealerHand').scores()[0]
-      console.log('player wins')
+      @gameOver('player')
     else
-      console.log('dealer wins')
+      @gameOver('dealer')
 
   stand: ->
-      @get('AppModel').get('dealerHand').models[0].flip()
-      @dealerTurn()
+    @get('AppModel').get('dealerHand').models[0].flip()
+    @dealerTurn()
 
     # if @get 'turn' is 0
     #   console.log('stand is invoked')
@@ -25,5 +30,19 @@ class window.Game extends Backbone.Model
       @get('AppModel').get('dealerHand').hit()
       @dealerTurn()
 
-  #need to handle aces in dealer turn and determineWinner, and busts
-  #dealer turn is not invoking
+  bustChecker: ->
+    if @get('AppModel').get('playerHand').scores()[0] > 21
+      @gameOver('dealer')
+    if @get('AppModel').get('dealerHand').scores()[0] > 21
+      @gameOver('player')
+
+  gameOver: (winner) ->
+    if @get('gameRunning')
+      @set('gameRunning', false)
+      console.log('game over ' + winner)
+
+
+  #need to handle aces in dealer turn and determineWinner
+  #add in button for deal next hand
+  #make it obvious on the dom who won
+  #immediate game over on bust
