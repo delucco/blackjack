@@ -47,6 +47,5 @@ class window.Game extends Backbone.Model
       @set('gameRunning', false)
       console.log('game over ' + winner)
 
-  #add in button for deal next hand
   #make it obvious on the dom who won
-  #immediate game over on bust
+  #add in button for deal next hand
