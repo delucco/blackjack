@@ -4,22 +4,24 @@ class window.Game extends Backbone.Model
     @set 'turn', 0
 
   determineWinner: ->
-    if @AppModel.get(playerHand.scores)[0] > @AppModel.get(dealerHand.scores)[0]
+    if @get('AppModel').get('playerHand').scores()[0] > @get('AppModel').get('dealerHand').scores()[0]
       console.log('player wins')
     else
       console.log('dealer wins')
 
   stand: ->
-    if @get 'turn' is 0
-      @set 'turn', 1
       @dealerTurn()
+    # if @get 'turn' is 0
+    #   console.log('stand is invoked')
+    #   @set 'turn', 1
 
   dealerTurn: ->
-    console.log('dealer turn is invoked')
-    if @AppModel.get(dealerHand.scores)[0] > 16
-      determineWinner()
+    #flip dealer card
+    console.log(@get('AppModel').get('dealerHand') )
+    if @get('AppModel').get('dealerHand').scores()[0] > 16
+      @determineWinner()
     else
-      @AppModel.get(dealerHand).hit()
+      @get('AppModel').get('dealerHand').hit()
       @dealerTurn()
 
   #need to handle aces in dealer turn and determineWinner, and busts
