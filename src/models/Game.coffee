@@ -9,7 +9,11 @@ class window.Game extends Backbone.Model
 
   determineWinner: ->
     #invoke gameOver()
-    if @get('AppModel').get('playerHand').scores()[0] > @get('AppModel').get('dealerHand').scores()[0]
+    playerScores = @get('AppModel').get('playerHand').scores()
+    maxPlayer = if playerScores[1] <= 21 then playerScores[1] else playerScores[0]
+    dealerScores = @get('AppModel').get('dealerHand').scores()
+    maxDealer = if dealerScores[1] <= 21 then dealerScores[1] else dealerScores[0]
+    if maxPlayer > maxDealer
       @gameOver('player')
     else
       @gameOver('dealer')
@@ -23,8 +27,10 @@ class window.Game extends Backbone.Model
     #   @set 'turn', 1
 
   dealerTurn: ->
-    #flip dealer card
-    if @get('AppModel').get('dealerHand').scores()[0] > 16
+
+    #maybe ask if the double get below is best practice
+    dealerScores = @get('AppModel').get('dealerHand').scores()
+    if ( dealerScores[1] > 17 and dealerScores[1] <=21 ) or dealerScores[0] > 16
       @determineWinner()
     else
       @get('AppModel').get('dealerHand').hit()
@@ -41,8 +47,6 @@ class window.Game extends Backbone.Model
       @set('gameRunning', false)
       console.log('game over ' + winner)
 
-
-  #need to handle aces in dealer turn and determineWinner
   #add in button for deal next hand
   #make it obvious on the dom who won
   #immediate game over on bust
