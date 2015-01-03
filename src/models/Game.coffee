@@ -13,13 +13,14 @@ class window.Game extends Backbone.Model
     if @get 'turn' is 0
       @set 'turn', 1
       @dealerTurn()
-    #else @determineWinner()
 
   dealerTurn: ->
+    console.log('dealer turn is invoked')
     if @AppModel.get(dealerHand.scores)[0] > 16
       determineWinner()
     else
       @AppModel.get(dealerHand).hit()
       @dealerTurn()
 
-    #if players turn, move to dealer turn
+  #need to handle aces in dealer turn and determineWinner, and busts
+  #dealer turn is not invoking
