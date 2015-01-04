@@ -5,10 +5,8 @@ class window.Game extends Backbone.Model
     @get('AppModel').get('playerHand').on('hitter', @bustChecker, @)
     @get('AppModel').get('dealerHand').on('hitter', @bustChecker, @)
 
-    #@set 'turn', 0
 
   determineWinner: ->
-    #invoke gameOver()
     playerScores = @get('AppModel').get('playerHand').scores()
     maxPlayer = if playerScores[1] <= 21 then playerScores[1] else playerScores[0]
     dealerScores = @get('AppModel').get('dealerHand').scores()
@@ -22,12 +20,7 @@ class window.Game extends Backbone.Model
     @get('AppModel').get('dealerHand').models[0].flip()
     @dealerTurn()
 
-    # if @get 'turn' is 0
-    #   console.log('stand is invoked')
-    #   @set 'turn', 1
-
   dealerTurn: ->
-
     #maybe ask if the double get below is best practice
     dealerScores = @get('AppModel').get('dealerHand').scores()
     if ( dealerScores[1] > 17 and dealerScores[1] <=21 ) or dealerScores[0] > 16
@@ -46,6 +39,10 @@ class window.Game extends Backbone.Model
     if @get('gameRunning')
       @set('gameRunning', false)
       console.log('game over ' + winner)
+      $('.gameOver').toggleClass('hidden');
+      $('.gameOver h2').text(winner + ' won');
+      #make it obvious on the dom who won
+      #add a button to the dom that lets the user play again
 
   #make it obvious on the dom who won
   #add in button for deal next hand

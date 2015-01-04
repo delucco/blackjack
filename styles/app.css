@@ -1,16 +1,39 @@
 .card {
   float: left;
   border: solid 1px black;
-  width: 100px;
+  width: 120px;
   border-radius: 5px;
-  height: 140px;
+  height: 170px;
   margin-right: 20px;
 }
 
 .covered {
-  background-color: black;
+  content: url("../img/card-back.png");
+  background-size: 100%;
+  z-index: 1;
+  font-size: 0;
 }
 
 .hand {
   overflow: auto;
+}
+
+/*body {
+  background-image: url("../img/pokerBackground.jpg");
+}*/
+.gameOver {
+  color: white;
+  font-size:18px;
+  font-style: bold;
+}
+.hidden {
+  display:none;
+}
+
+html {
+  background: url("../img/pokerBackground.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
