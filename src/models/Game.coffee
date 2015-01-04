@@ -9,10 +9,10 @@ class window.Game extends Backbone.Model
 
   determineWinner: ->
     playerScores = @get('AppModel').get('playerHand').scores()
-    maxPlayer = if playerScores[1] <= 21 then playerScores[1] else playerScores[0]
     dealerScores = @get('AppModel').get('dealerHand').scores()
+    maxPlayer = if playerScores[1] <= 21 then playerScores[1] else playerScores[0]
     maxDealer = if dealerScores[1] <= 21 then dealerScores[1] else dealerScores[0]
-    if maxPlayer > maxDealer
+    if maxPlayer > maxDealer or maxDealer > 21
       @gameOver('player')
     else
       @gameOver('dealer')
@@ -31,6 +31,7 @@ class window.Game extends Backbone.Model
       @dealerTurn()
 
   bustChecker: ->
+    console.log('check my bust')
     if @get('AppModel').get('playerHand').scores()[0] > 21
       @gameOver('dealer')
     if @get('AppModel').get('dealerHand').scores()[0] > 21
@@ -45,11 +46,11 @@ class window.Game extends Backbone.Model
       $('.gameOver h2').text(winner + ' won!')
 
   redeal: ->
-    console.log('redealt')
-    @set('winner','')
-    @set('gameRunning',true)
+    console.log(@get('AppModel').get('deck').length)
     @get('AppModel').set 'playerHand', @get('AppModel').get('deck').dealPlayer()
     @get('AppModel').set 'dealerHand', @get('AppModel').get('deck').dealDealer()
+    @initialize()
+
 
   #gameRunning is messing us up
   #make it obvious on the dom who won

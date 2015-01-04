@@ -18,17 +18,19 @@
   overflow: auto;
 }
 
-/*body {
-  background-image: url("../img/pokerBackground.jpg");
-}*/
 .gameOver {
   color: white;
   font-size:18px;
   font-style: bold;
 }
-/*.hidden {
+
+.hidden {
   display:none;
-}*/
+}
+
+h2 {
+  color: white;
+}
 
 html {
   background: url("../img/pokerBackground.jpg") no-repeat center center fixed;
