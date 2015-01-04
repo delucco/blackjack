@@ -2,6 +2,7 @@ class window.Game extends Backbone.Model
 
   initialize: ->
     @set('gameRunning', true)
+    @set('winner', '')
     @get('AppModel').get('playerHand').on('hitter', @bustChecker, @)
     @get('AppModel').get('dealerHand').on('hitter', @bustChecker, @)
 
@@ -38,11 +39,18 @@ class window.Game extends Backbone.Model
   gameOver: (winner) ->
     if @get('gameRunning')
       @set('gameRunning', false)
+      @set('winner', winner)
       console.log('game over ' + winner)
-      $('.gameOver').toggleClass('hidden');
-      $('.gameOver h2').text(winner + ' won');
-      #make it obvious on the dom who won
-      #add a button to the dom that lets the user play again
+      $('.gameOver').toggleClass('hidden')
+      $('.gameOver h2').text(winner + ' won!')
 
+  redeal: ->
+    console.log('redealt')
+    @set('winner','')
+    @set('gameRunning',true)
+    @get('AppModel').set 'playerHand', @get('AppModel').get('deck').dealPlayer()
+    @get('AppModel').set 'dealerHand', @get('AppModel').get('deck').dealDealer()
+
+  #gameRunning is messing us up
   #make it obvious on the dom who won
   #add in button for deal next hand

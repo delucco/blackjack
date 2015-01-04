@@ -3,12 +3,15 @@ class window.AppView extends Backbone.View
     <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
+    <div class="game-container"></div>
   '
 
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
     'click .stand-button': -> @model.get('gameModel').stand()
-    # 'hitter': -> console.log('heard it')
+    'click .playAgain-button': ->
+      @render()
+      console.log('rendered AppView')
 
   initialize: ->
     @render()
@@ -18,4 +21,5 @@ class window.AppView extends Backbone.View
     @$el.html @template()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
+    @$('.game-container').html new GameView(model: @model.get 'gameModel').el
 

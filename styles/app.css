@@ -26,9 +26,9 @@
   font-size:18px;
   font-style: bold;
 }
-.hidden {
+/*.hidden {
   display:none;
-}
+}*/
 
 html {
   background: url("../img/pokerBackground.jpg") no-repeat center center fixed;
